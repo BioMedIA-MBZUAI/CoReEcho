@@ -25,6 +25,7 @@ def parse_option():
     parser.add_argument('--epochs', type=int, default=400, help='number of training epochs')
     parser.add_argument('--learning_rate', type=float, default=0.5, help='learning rate')
     parser.add_argument('--weight_decay', type=float, default=1e-4, help='weight decay')
+    parser.add_argument('--val_n_clips_per_sample', type=int, default=1)
     parser.add_argument('--trial', type=str, default='0', help='id for recording multiple runs')
     
     parser.add_argument('--data_folder', type=str, default='./data', help='path to custom dataset')
@@ -176,7 +177,7 @@ def main():
         
         train_lp(train_loader, model, epoch, opt, regressor, optimizer_regressor)
         
-        valid_metrics, valid_aux  = validate(val_loader, model, regressor)
+        valid_metrics, valid_aux  = validate(val_loader, model, regressor, opt.val_n_clips_per_sample)
         valid_tsne = HelperTSNE(valid_aux['embeddings'], n_components=2, perplexity=5, random_state=7)
         valid_umap = HelperUMAP(valid_aux['embeddings'], n_components=2, n_neighbors=5, init='random', random_state=0)
         
@@ -217,13 +218,13 @@ def main():
     print(f"Loaded best model, epoch {checkpoint['epoch']}, best val error {checkpoint['best_error']:.3f}")
     
     set_seed(opt.trial)
-    test_metrics, test_aux = validate(test_loader, model, regressor)
+    test_metrics, test_aux = validate(test_loader, model, regressor, opt.val_n_clips_per_sample)
     print('Test R2: {:.3f}'.format(test_metrics['r2']))
     print('Test L2: {:.3f}'.format(test_metrics['l2']))
     print('Test L1: {:.3f}'.format(test_metrics['l1']))
     
     set_seed(opt.trial)
-    val_metrics, val_aux = validate(val_loader, model, regressor)
+    val_metrics, val_aux = validate(val_loader, model, regressor, opt.val_n_clips_per_sample)
     print('Val R2: {:.3f}'.format(val_metrics['r2']))
     print('Val L2: {:.3f}'.format(val_metrics['l2']))
     print('Val L1: {:.3f}'.format(val_metrics['l1']))
