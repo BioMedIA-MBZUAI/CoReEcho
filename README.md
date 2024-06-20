@@ -102,6 +102,11 @@ python test_with_three_clips.py \
 |------------|----------|
 | UniFormer-S | [link](https://drive.google.com/file/d/1ZNF4lMTLEnaZyhVHHTUW_MctB7kDGP6o/view?usp=sharing) |
 
+## TODO
+
+- [ ] Release the transfer learning code
+- [ ] Convert `environment.yml` to `requirements.txt` for faster installation
+
 ## Citation
 If you find this repository useful, please consider citing this work:
 ```latex
