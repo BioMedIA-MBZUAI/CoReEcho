@@ -60,6 +60,7 @@ python train_first_stage.py \
     --learning_rate 1e-4 \
     --weight_decay 1e-4 \
     --lr_decay_rate 0.1 \
+    --val_n_clips_per_sample 3 \
     --temp 1.0 \
     --aug \
     --epochs 25 \
@@ -81,6 +82,7 @@ python train_second_stage.py \
     --frequency 4 \
     --learning_rate 1e-4 \
     --weight_decay 1e-4 \
+    --val_n_clips_per_sample 3 \
     --aug \
     --epochs 4 \
     --trial 0
